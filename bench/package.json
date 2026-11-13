@@ -1,0 +1,17 @@
+{
+    "name": "parse5-benchmarks",
+    "private": "true",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "parse5 regression benchmarks",
+    "author": "Ivan Nikulin <ifaaan@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "human-format": "^1.4.0",
+        "parse5": "npm:parse5",
+        "tinybench": "^6.2.3"
+    },
+    "devDependencies": {
+        "parse5-test-utils": "1.0.0"
+    }
+}

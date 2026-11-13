@@ -1,0 +1,58 @@
+{
+    "name": "parse5-build-scripts",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "packages/*",
+        "bench",
+        "test"
+    ],
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@vitest/coverage-v8": "^5.1.0",
+        "eslint": "^10.14.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-unicorn-x": "^3.2.1",
+        "globals": "^17.14.0",
+        "husky": "^9.1.7",
+        "nano-staged": "^1.0.2",
+        "outdent": "^0.8.0",
+        "prettier": "^3.9.10",
+        "ts-node": "^10.9.2",
+        "typedoc": "^0.28.20",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.72.2",
+        "vitest": "^5.1.0"
+    },
+    "scripts": {
+        "build": "tsc --build packages/* test",
+        "build:docs": "typedoc",
+        "prettier": "prettier '**/*.{js,ts,md,json,yml}' --log-level warn",
+        "format": "npm run format:es && npm run format:prettier",
+        "format:es": "npm run lint:es -- --fix",
+        "format:prettier": "npm run prettier -- --write",
+        "lint": "npm run lint:es && npm run lint:prettier",
+        "lint:es": "eslint .",
+        "lint:prettier": "npm run prettier -- --check",
+        "unit-tests": "vitest run",
+        "unit-tests-coverage": "vitest run --coverage",
+        "test": "npm run lint && npm run unit-tests",
+        "generate-feedback-tests": "node --loader ts-node/esm scripts/generate-parser-feedback-test/index.ts test/data/html5lib-tests/tree-construction/*.dat",
+        "bench-perf": "npm run build && node bench/perf/index.js",
+        "bench-memory-sax": "npm run build && node bench/memory/sax-parser.js",
+        "preversion": "npm test",
+        "pre-commit": "nano-staged",
+        "publish": "npm publish --workspaces",
+        "prepare": "husky install",
+        "prepublish": "npm run build"
+    },
+    "nano-staged": {
+        "*.{js,ts}": [
+            "prettier --write",
+            "eslint --fix"
+        ],
+        "*.{md,json,yml}": [
+            "prettier --write"
+        ]
+    }
+}
